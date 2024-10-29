@@ -1,6 +1,6 @@
 import React from 'react';
 import './Login.css';
-import { Form } from 'react-router-dom';
+import Form from '../../containers/Form/Form'
 import { FaUserCircle } from "react-icons/fa";
 
 function Login() {

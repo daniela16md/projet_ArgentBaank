@@ -6,7 +6,17 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import './App.css';
 
+//redux
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from './redux/action/actionstypes';
+
 function App() {
+  const dispatch = useDispatch();
+	const token = localStorage.getItem("token");
+
+	if (token) {
+		dispatch(loginSuccess(token));
+	}
   return (
     <Router>
       <Header />

@@ -1,5 +1,5 @@
 import React from 'react';
-import Profilecontent from '../../components/Footer/Profilecontent/Profilecontent';
+import Profilecontent from '../../components/Profilecontent/Profilecontent';
 import "./User.css"
 
 function User() {
