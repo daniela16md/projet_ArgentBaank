@@ -1,9 +1,17 @@
 import React from 'react';
-import "./Login.css"
+import './Login.css';
+import { Form } from 'react-router-dom';
+import { FaUserCircle } from "react-icons/fa";
 
 function Login() {
   return (
-    <div>Login</div>
+    <div className='main bg-dark'>
+      <section className="sign-in-content">
+        <FaUserCircle className="fa-solid fa-user-circle sign-in-icon"/>
+        <h1 className='loginh1'>Sign In</h1>
+        <Form/>
+      </section>
+    </div>
   )
 }
 

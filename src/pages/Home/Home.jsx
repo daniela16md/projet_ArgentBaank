@@ -1,9 +1,13 @@
-import React from 'react'
-import "./Home.css"
+import React from 'react';
+import Hero from '../../containers/Hero/Hero';
+import Features from '../../containers/Features/Features';
 
 function Home() {
   return (
-    <div>Home</div>
+    <div>
+      <Hero/>
+      <Features/>
+    </div>
   )
 }
 

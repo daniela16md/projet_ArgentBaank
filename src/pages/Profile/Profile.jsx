@@ -1,9 +1,16 @@
 import React from 'react';
-import "./Profile.css"
+import Profilecontent from '../../containers/Profilecontent/Profilecontent';
 
 function Profile() {
+
   return (
-    <div>Profile</div>
+    <div className='usersaccount'>
+      <div className='editname'>
+        <h1>Welcome back<br />Name</h1>
+        <button className='editnamebutton'>Edit name</button>
+      </div>
+      <Profilecontent />
+    </div>
   )
 }
 
