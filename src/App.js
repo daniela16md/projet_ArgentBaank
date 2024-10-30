@@ -4,6 +4,7 @@ import Home from './pages/Home/Home';
 import User from './pages/Profile/User';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
+import { useEffect } from 'react';
 import './App.css';
 
 //redux
@@ -14,9 +15,11 @@ function App() {
   const dispatch = useDispatch();
 	const token = localStorage.getItem("token");
 
-	if (token) {
-		dispatch(loginSuccess(token));
-	}
+	useEffect(() => {
+    if (token) {
+      dispatch(loginSuccess(token));
+    }
+  }, [dispatch, token]);
   return (
     <Router>
       <Header />

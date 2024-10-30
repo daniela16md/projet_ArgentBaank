@@ -14,11 +14,23 @@ function User() {
     dispatch(fetchUserProfile());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (!display) {
+      setUserName(userData.userName || "");
+    }
+  }, [display, userData.userName]);
+
   const handleSubmitUsername = (event) => {
     event.preventDefault();
     const profileData = { userName };
+    console.log("profileData");
     dispatch(updateProfile(profileData)); 
     setDisplay(true); 
+    
+  
+  };
+  const toggleEditMode = () => {
+    setDisplay(!display);
   };
 
   return (
@@ -29,11 +41,11 @@ function User() {
             <h1 className='editnameh1'>
               Welcome back,
               <br />
-              {userData.firstName} {userData.lastName}!
+              {userData?.firstName} {userData?.lastName}!
             </h1>
             <button 
               className='editnamebutton' 
-              onClick={() => setDisplay(!display)}
+              onClick={toggleEditMode}
             >
               Edit name
             </button>
@@ -50,7 +62,7 @@ function User() {
               />
             </div>
             <button type="submit">Update Username</button>
-            <button type="button" onClick={() => setDisplay(true)}>
+            <button type="button" onClick={toggleEditMode}>
               Cancel
             </button>
           </form>

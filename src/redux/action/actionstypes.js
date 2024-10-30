@@ -8,6 +8,7 @@ export const UPDATE_USERNAME = "UPDATE_USERNAME";
 
 const API_URL = "http://localhost:3001/api/v1/user";
 
+
 export const userProfile = (userData) => (dispatch) => {
 	dispatch({
 		type: GET_USERPROFILE,
@@ -24,17 +25,21 @@ export const updateUserName = (userName) => (dispatch) => {
 	console.log("Username Updated:", userName);
 };
 
-export const loginSuccess = (token) => {
+export const loginSuccess = (token, userData) => {
 	return {
 		type: LOGIN_SUCCESS,
-		payload: token
+		payload: {
+			token, 
+			userData
+		}
 	};
 };
 
 export const loginError = (error) => {
 	return {
 		type: LOGIN_ERROR,
-		payload: error
+		payload: error, 
+		     
 	};
 };
 
@@ -50,8 +55,9 @@ export const loginUser = (credentials) => async (dispatch) => {
 	try {
 		const response = await axios.post(`${API_URL}/login`, credentials);
 		const token = response.data.body.token;
+		const userData = response.data.body.userData;
 		localStorage.setItem('token', token); 
-		dispatch(loginSuccess(token));
+		dispatch(loginSuccess(token, userData));
 		console.log("Login Successful:", token);
     
 	} catch (error) {
@@ -77,7 +83,7 @@ export const fetchUserProfile = () => async (dispatch) => {
 		const response = await axios.get(`${API_URL}/profile`, {
 			headers: { Authorization: `Bearer ${token}` }
 		});
-		dispatch(userProfile(response.data));
+		dispatch(userProfile(response.data.body));
 		console.log("Fetched User Profile:", response.data);
 	} catch (error) {
 		console.error("Fetch User Profile Error:", error.response.data.message);
@@ -90,7 +96,7 @@ export const updateProfile = (profileData) => async (dispatch) => {
 		const response = await axios.put(`${API_URL}/profile`, profileData, {
 			headers: { Authorization: `Bearer ${token}` }
 		});
-		dispatch(userProfile(response.data));
+		dispatch(updateUserName(response.data.body));
 		console.log("Profile Updated:", response.data);
 	} catch (error) {
 		console.error("Update Profile Error:", error.response.data.message);

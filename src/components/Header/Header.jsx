@@ -10,28 +10,29 @@ import { logout } from '../../redux/action/actionstypes';
 
 function Header() {
   const userName = useSelector((state)  => state.user.userData.userName);
-  const isSignIn = useSelector((state) => state.auth.token);
+  console.log(userName);
+  const isConnected = useSelector((state) => state.auth.isConnected);
+  console.log('isConnected:', isConnected);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const HandlesignOut = () => {
+  const handleSignOut = () => {
     dispatch(logout());
-    localStorage.removeItem("token");
     navigate("/")
   }
-  console.log('isSignIn:', isSignIn);
+  console.log('isConnected', isConnected);
   console.log('userName:', userName);
 
   return (
     <nav className='main-nav'>
       <Link className='main-nav-logo' to="/"><img className='main-nav-logo-image'src={Logo} alt='Logo'/>
       <h1 className='sr-only'>Argent Bank</h1></Link>
-      {isSignIn ? (
+      {isConnected ? (
         <div className='main-menu'>
           <Link className='main-nav-item' to='/User'>
             <FaUserCircle  className='fa fa-user-circle' aria-hidden="true"/>
-            <p>{userName || "User"}</p>
+            <p>{userName?.userName || "User"}</p>
           </Link>
-          <Link className='main-nav-item' to="/"  onClick={HandlesignOut}>
+          <Link className='main-nav-item' to="/"  onClick={handleSignOut}>
             <FaSignOutAlt className='fa fa-sign-out' aria-hidden="true"/>
             <p>Sign Out</p>
           </Link>
