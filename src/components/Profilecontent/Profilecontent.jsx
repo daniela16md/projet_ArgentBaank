@@ -1,8 +1,6 @@
 import React from 'react';
 import datas from "../../Data/profile.json"
 
-
-
 function Profilecontent () {
   return (
     <div className='userscontentdiv'>

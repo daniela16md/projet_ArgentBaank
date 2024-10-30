@@ -1,18 +1,64 @@
-import React from 'react';
-import Profilecontent from '../../components/Profilecontent/Profilecontent';
-import "./User.css"
+import React, { useEffect, useState } from 'react'; 
+import { useDispatch, useSelector } from 'react-redux'; 
+import ProfileContent from '../../components/Profilecontent/Profilecontent';
+import { fetchUserProfile, updateProfile } from '../../redux/action/actionstypes'; 
+import "./User.css";
 
-function User() {
+function User() { 
+  const dispatch = useDispatch();
+  const [display, setDisplay] = useState(true);
+  const [userName, setUserName] = useState("");
+  const userData = useSelector(state => state.user.userData); 
+
+  useEffect(() => {
+    dispatch(fetchUserProfile());
+  }, [dispatch]);
+
+  const handleSubmitUsername = (event) => {
+    event.preventDefault();
+    const profileData = { userName };
+    dispatch(updateProfile(profileData)); 
+    setDisplay(true); 
+  };
 
   return (
     <div className='usersaccount'>
       <div className='editname'>
-        <h1 className='editnameh1'>Welcome back<br />Name</h1>
-        <button className='editnamebutton'>Edit name</button>
+        {display ? (
+          <>
+            <h1 className='editnameh1'>
+              Welcome back,
+              <br />
+              {userData.firstName} {userData.lastName}!
+            </h1>
+            <button 
+              className='editnamebutton' 
+              onClick={() => setDisplay(!display)}
+            >
+              Edit name
+            </button>
+          </>
+        ) : (
+          <form onSubmit={handleSubmitUsername}>
+            <div className="input-wrapper">
+              <label htmlFor="userName">New Username</label>
+              <input
+                type="text"
+                id="userName"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+              />
+            </div>
+            <button type="submit">Update Username</button>
+            <button type="button" onClick={() => setDisplay(true)}>
+              Cancel
+            </button>
+          </form>
+        )}
       </div>
-      <Profilecontent />
+      <ProfileContent />
     </div>
-  )
+  );
 }
 
-export default User
+export default User;
